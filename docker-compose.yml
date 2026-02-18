@@ -8,24 +8,6 @@ services:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
-    depends_on:
-      - db
-    env_file:
-      - .env
-
-  db:
-    image: mysql:8.0
-    container_name: whatsapp_mysql
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: whatsapp
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
 
-volumes:
-  db_data:

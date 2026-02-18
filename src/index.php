@@ -1,2 +1,2 @@
 <?php
-echo "Proyecto PHP corriendo correctamente 🚀";
+require __DIR__ . '/router.php';
