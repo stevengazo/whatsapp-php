@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . "/../../components/AddUser.php";
+// Incluye el modal solo una vez
+include __DIR__ . "/../../components/AddUser.php";
 ?>
 
 <div class="container-fluid">
@@ -17,6 +18,7 @@ require_once __DIR__ . "/../../components/AddUser.php";
         <i class="bi bi-person-plus"></i> Nuevo Usuario
       </button>
 
+      <?php if (!empty($users)): ?>
       <div class="table-responsive">
         <table class="table table-hover align-middle">
           <thead class="table-light">
@@ -28,24 +30,28 @@ require_once __DIR__ . "/../../components/AddUser.php";
             </tr>
           </thead>
           <tbody>
+            <?php foreach ($users as $user): ?>
             <tr>
-              <td>Admin</td>
-              <td>admin@email.com</td>
-              <td>Administrador</td>
+              <td><?= htmlspecialchars($user['name']) ?></td>
+              <td><?= htmlspecialchars($user['email']) ?></td>
+              <td><?= htmlspecialchars($user['role_name']) ?></td>
               <td>
                 <button class="btn btn-sm btn-outline-primary">
                   Editar
                 </button>
               </td>
             </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
+      <?php else: ?>
+        <div class="alert alert-info small">
+          No hay usuarios registrados.
+        </div>
+      <?php endif; ?>
 
     </div>
   </div>
 
 </div>
-
-<!-- Aquí se renderiza el modal -->
-<?php include __DIR__ . "/../../components/AddUser.php"; ?>

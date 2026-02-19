@@ -10,4 +10,17 @@ services:
       - ./src:/var/www/html
       - ./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
     restart: always
-
+  db:
+      image: mysql:8.0
+      container_name: mecsa_db
+      environment:
+        MYSQL_ROOT_PASSWORD: root123
+        MYSQL_DATABASE: mecsa
+        MYSQL_USER: mecsa_user
+        MYSQL_PASSWORD: secret123
+      ports:
+        - "3306:3306"
+      volumes:
+        - db_data:/var/lib/mysql
+volumes:
+  db_data:

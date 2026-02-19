@@ -14,7 +14,7 @@
 
       <!-- Body -->
       <div class="modal-body">
-        <form action="AddUser.php" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
 
           <!-- Username -->
           <div class="mb-3">
@@ -44,6 +44,21 @@
           <div class="mb-3">
             <label class="form-label small">Contraseña</label>
             <input type="password" name="password" class="form-control form-control-sm" required>
+          </div>
+
+          <!-- Role -->
+          <div class="mb-3">
+            <label class="form-label small">Rol</label>
+            <select name="role_id" class="form-select form-select-sm">
+              <?php
+              // Cargar roles desde la base de datos
+              $rolesStmt = Database::getInstance()->query("SELECT * FROM roles");
+              $roles = $rolesStmt->fetchAll();
+              foreach ($roles as $role):
+              ?>
+              <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['name']) ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
 
           <!-- Footer -->
