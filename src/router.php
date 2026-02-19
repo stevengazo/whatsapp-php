@@ -3,6 +3,10 @@
 session_start();
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// 🔥 MUY IMPORTANTE
+$uri = str_replace(BASE_URL, '', $uri);
+
 $uri = rtrim($uri, '/') ?: '/';
 
 $routes = [
@@ -14,7 +18,12 @@ $routes = [
 
     '/chats' => ['ChatController', 'index'],
     '/kanban' => ['KanbanController', 'index'],
+
+    // Settings
     '/settings' => ['SettingsController', 'index'],
+    '/settings/crm' => ['SettingsController', 'crm'],
+    '/settings/users' => ['SettingsController', 'users'],
+    '/settings/channels' => ['SettingsController', 'channels'],
 ];
 
 if (array_key_exists($uri, $routes)) {
