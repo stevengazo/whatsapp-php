@@ -22,8 +22,10 @@ $routes = [
     // Settings
     '/settings' => ['SettingsController', 'index'],
     '/settings/crm' => ['SettingsController', 'crm'],
-    '/settings/users' => ['SettingsController', 'users'],
+    '/settings/users' => ['UserController', 'index'],          // Lista de usuarios
+    '/settings/users/create' => ['UserController', 'create'], // Crear usuario
     '/settings/channels' => ['SettingsController', 'channels'],
+
 ];
 
 if (array_key_exists($uri, $routes)) {

@@ -23,18 +23,16 @@ class User
         return $stmt->fetch();
     }
 
-    public function create($data)
-    {
-        $stmt = $this->db->prepare("INSERT INTO users (username, name, email, password, photo, role_id) VALUES (?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([
-            $data['username'],
-            $data['name'],
-            $data['email'],
-            password_hash($data['password'], PASSWORD_BCRYPT),
-            $data['photo'] ?? null,
-            $data['role_id'] ?? 2
-        ]);
-    }
+public function create($data)
+{
+    $db = Database::getInstance();
+    $stmt = $db->prepare("
+        INSERT INTO users (username, name, email, password, photo, role_id)
+        VALUES (:username, :name, :email, :password, :photo, :role_id)
+    ");
+    $stmt->execute($data);
+}
+
 
     public function update($id, $data)
     {

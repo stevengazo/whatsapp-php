@@ -1,8 +1,3 @@
-<?php
-// Incluye el modal solo una vez
-include __DIR__ . "/../../components/AddUser.php";
-?>
-
 <div class="container-fluid">
 
   <h1 class="h4 mb-4">Gestión de Usuarios</h1>
@@ -55,3 +50,6 @@ include __DIR__ . "/../../components/AddUser.php";
   </div>
 
 </div>
+
+<!-- Modal al final -->
+<?php include __DIR__ . "/../../components/AddUser.php"; ?>

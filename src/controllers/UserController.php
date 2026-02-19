@@ -28,32 +28,35 @@ class UserController extends BaseController
     }
 
     // Crear nuevo usuario
-    public function create()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  public function create()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $data = [
-                'username' => $_POST['username'],
-                'name'     => $_POST['name'],
-                'email'    => $_POST['email'],
-                'password' => $_POST['password'],
-                'photo'    => $_FILES['photo']['name'] ?? null,
-                'role_id'  => $_POST['role_id'] ?? 2
-            ];
+        $data = [
+            'username' => $_POST['username'],
+            'name'     => $_POST['name'],
+            'email'    => $_POST['email'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), // Encriptar contraseña
+            'photo'    => $_FILES['photo']['name'] ?? null,
+            'role_id'  => $_POST['role_id'] ?? 2
+        ];
 
-            // Subir foto si existe
-            if (isset($_FILES['photo']) && $_FILES['photo']['tmp_name']) {
-                $targetDir = __DIR__ . "/../uploads/users/";
-                if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
-                move_uploaded_file($_FILES['photo']['tmp_name'], $targetDir . $_FILES['photo']['name']);
-            }
-
-            $this->userModel->create($data);
-
-            header("Location: /settings/users");
-            exit;
+        // Subir foto si existe
+        if (isset($_FILES['photo']) && $_FILES['photo']['tmp_name']) {
+            $targetDir = __DIR__ . "/../uploads/users/";
+            if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $targetDir . $_FILES['photo']['name']);
         }
+
+        // ✅ Guardar usuario en la base de datos
+        $this->userModel->create($data);
+
+        // Redirigir a la lista de usuarios
+        header("Location: /settings/users");
+        exit;
     }
+}
+
 
     // Editar usuario
     public function edit($id)
